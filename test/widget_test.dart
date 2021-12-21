@@ -1,30 +1,18 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:faturas/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+  testWidgets('Should find home screen', (tester) async {
     await tester.pumpWidget(Faturas());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Última fatura'), findsOneWidget);
+    expect(find.text('R\$ 3.025,49'), findsOneWidget);
+    expect(find.text('Vencimento 08/07/2019'), findsOneWidget);
+    expect(find.text('Vencida'), findsOneWidget);
+    expect(find.text('Formas de Pagamento'), findsOneWidget);
+    expect(find.text('Boleto Bancário'), findsOneWidget);
+    expect(find.text('Cartão de Crédito'), findsOneWidget);
   });
 }
