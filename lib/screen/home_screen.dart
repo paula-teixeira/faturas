@@ -71,11 +71,11 @@ class HomeScreen extends StatelessWidget {
                   style: subtitleTextStyle,
                 ),
                 OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () => _exibirDialogo(context),
                   child: Text('Copiar código de barras do boleto'),
                 ),
                 OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () => _exibirDialogo(context),
                   child: Text('Enviar boleto por e-mail'),
                 ),
                 SizedBox(
@@ -86,7 +86,7 @@ class HomeScreen extends StatelessWidget {
                   style: subtitleTextStyle,
                 ),
                 OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () => _exibirDialogo(context),
                   child: Text('Pagar com cartão de crédito'),
                 ),
               ],
@@ -96,4 +96,21 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+
+  void _exibirDialogo (context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Erro'),
+        content: Text('Conteúdo não implementado.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
 }
