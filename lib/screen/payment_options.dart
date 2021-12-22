@@ -102,6 +102,7 @@ class _PaymentOptionsScreenState extends State<PaymentOptionsScreen> {
                         ),
                         Text(
                           '${formatter.format(operationTax)}',
+                          key: Key('operationTax'),
                           style: TextStyle(
                             color: Colors.grey,
                             fontSize: 16,
