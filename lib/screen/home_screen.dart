@@ -1,4 +1,5 @@
 import 'package:faturas/components/components.dart';
+import 'package:faturas/screen/payment_options.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -86,7 +87,12 @@ class HomeScreen extends StatelessWidget {
                   style: subtitleTextStyle,
                 ),
                 OutlinedButton(
-                  onPressed: () => _exibirDialogo(context),
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (builder) => PaymentOptionsScreen(),
+                    ),
+                  ),
                   child: Text('Pagar com cartão de crédito'),
                 ),
               ],
@@ -97,7 +103,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  void _exibirDialogo (context) {
+  void _exibirDialogo(context) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -112,5 +118,4 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-
 }
