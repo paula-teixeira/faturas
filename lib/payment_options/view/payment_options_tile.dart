@@ -1,19 +1,20 @@
 import 'package:faturas/payment_options/model/payment_model.dart';
+import 'package:faturas/payment_options/view_model/payment_options.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 NumberFormat formatter = NumberFormat.simpleCurrency();
 
 class PaymentOptionsTile extends StatelessWidget {
   final PaymentOption paymentOption;
-  final PaymentOption selectedPaymentOption;
-  final Function onChanged;
 
 
-  PaymentOptionsTile(this.paymentOption, this.selectedPaymentOption, this.onChanged);
+  PaymentOptionsTile(this.paymentOption);
 
   @override
   Widget build(BuildContext context) {
+    final payment = context.select((PaymentOptionsViewModel payment) => payment);
     return Card(
       child: RadioListTile(
         title: Row(
@@ -24,9 +25,10 @@ class PaymentOptionsTile extends StatelessWidget {
           ],
         ),
         value: paymentOption,
-        groupValue: selectedPaymentOption,
+        groupValue: payment.selectedPaymentOption,
         onChanged: (PaymentOption? value) {
-          onChanged(value!);
+          if (value == null){ return; }
+          payment.selectedPaymentOption = value;
         },
         ),
       );

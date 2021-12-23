@@ -1,36 +1,17 @@
-import 'package:faturas/payment_options/model/payment_model.dart';
-import 'package:faturas/payment_options/model/payment_options_model.dart';
 import 'package:faturas/payment_options/view/payment_options_tile.dart';
 import 'package:faturas/payment_options/view_model/payment_options.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 NumberFormat formatter = NumberFormat.simpleCurrency();
 
-class PaymentOptionsScreen extends StatefulWidget {
-  PaymentOptionsViewModel paymentOptionsViewModel =
-      PaymentOptionsViewModel(paymentOptionsModel: PaymentOptionsModel());
-
-  late PaymentOption selectedPaymentOption;
-
-  @override
-  _PaymentOptionsScreenState createState() => _PaymentOptionsScreenState();
-}
-
-class _PaymentOptionsScreenState extends State<PaymentOptionsScreen> {
-  @override
-  void initState() {
-    super.initState();
-    widget.selectedPaymentOption =
-        widget.paymentOptionsViewModel.paymentOptions[0];
-  }
-
+class PaymentOptionsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var operationTax = (widget.selectedPaymentOption.number *
-            widget.selectedPaymentOption.value) -
-        widget.paymentOptionsViewModel.invoiceValue;
-    
+    final paymentOptions = context
+        .select((PaymentOptionsViewModel paymentOptions) => paymentOptions);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Pagamento da fatura'),
@@ -48,16 +29,10 @@ class _PaymentOptionsScreenState extends State<PaymentOptionsScreen> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: widget.paymentOptionsViewModel.paymentOptions.length,
+                itemCount: paymentOptions.paymentOptions.length,
                 itemBuilder: (context, index) {
-                  final paymentOption =
-                      widget.paymentOptionsViewModel.paymentOptions[index];
-                  return PaymentOptionsTile(
-                      paymentOption, widget.selectedPaymentOption, (value) {
-                    setState(() {
-                      widget.selectedPaymentOption = value;
-                    });
-                  });
+                  final paymentOption = paymentOptions.paymentOptions[index];
+                  return PaymentOptionsTile(paymentOption);
                 },
               ),
             ),
@@ -79,7 +54,7 @@ class _PaymentOptionsScreenState extends State<PaymentOptionsScreen> {
                           ),
                         ),
                         Text(
-                          '${formatter.format(widget.paymentOptionsViewModel.invoiceValue)}',
+                          '${formatter.format(paymentOptions.invoiceValue)}',
                           style: TextStyle(
                             color: Colors.grey,
                             fontSize: 16,
@@ -101,7 +76,7 @@ class _PaymentOptionsScreenState extends State<PaymentOptionsScreen> {
                           ),
                         ),
                         Text(
-                          '${formatter.format(operationTax)}',
+                          '${formatter.format(paymentOptions.operationTax)}',
                           key: Key('operationTax'),
                           style: TextStyle(
                             color: Colors.grey,
