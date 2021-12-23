@@ -1,4 +1,4 @@
-import 'package:faturas/payment_options/model/payment_model.dart';
+import 'package:faturas/payment_options/model/payment_option.dart';
 import 'package:faturas/payment_options/model/payment_options_model.dart';
 import 'package:flutter/material.dart';
 
@@ -8,25 +8,29 @@ class PaymentOptionsViewModel {
   PaymentOptionsViewModel({required PaymentOptionsModel paymentOptionsModel})
       : _paymentOptionsModel = paymentOptionsModel;
 
-  List<PaymentOption> get paymentOptions {
-    return _paymentOptionsModel.paymentOptions;
+  Future<List<PaymentOption>> getPaymentOptions() {
+    return _paymentOptionsModel.getPaymentOptions();
   }
 
   get invoiceValue {
     return _paymentOptionsModel.invoiceValue;
   }
 
-  PaymentOption get selectedPaymentOption{
+  PaymentOption? get selectedPaymentOption {
     return _paymentOptionsModel.selectedPaymentOption;
   }
 
-  set selectedPaymentOption(PaymentOption newPaymentOption) {
+  set selectedPaymentOption(PaymentOption? newPaymentOption) {
     _paymentOptionsModel.selectedPaymentOption = newPaymentOption;
   }
 
   double get operationTax {
-    return (_paymentOptionsModel.selectedPaymentOption.number *
-        _paymentOptionsModel.selectedPaymentOption.value) -
+    if (_paymentOptionsModel.selectedPaymentOption == null){
+      return 0;
+    }
+
+    return (_paymentOptionsModel.selectedPaymentOption!.number *
+        _paymentOptionsModel.selectedPaymentOption!.value) -
         _paymentOptionsModel.invoiceValue;
   }
 

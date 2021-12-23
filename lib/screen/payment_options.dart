@@ -1,3 +1,4 @@
+import 'package:faturas/payment_options/model/payment_option.dart';
 import 'package:faturas/payment_options/view/payment_options_tile.dart';
 import 'package:faturas/payment_options/view_model/payment_options.dart';
 import 'package:flutter/material.dart';
@@ -28,11 +29,31 @@ class PaymentOptionsScreen extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: paymentOptions.paymentOptions.length,
-                itemBuilder: (context, index) {
-                  final paymentOption = paymentOptions.paymentOptions[index];
-                  return PaymentOptionsTile(paymentOption);
+              child: FutureBuilder<List<PaymentOption>>(
+                future: context.select(
+                  (PaymentOptionsViewModel model) => model.getPaymentOptions(),
+                ),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    final paymentOptions = snapshot.data!;
+                    return ListView.builder(
+                      itemCount: paymentOptions.length,
+                      itemBuilder: (context, index) {
+                        final paymentOption = paymentOptions[index];
+                        return PaymentOptionsTile(paymentOption);
+                      },
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text('${snapshot.error}');
+                  }
+                  return Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 100),
+                        child: CircularProgressIndicator(),
+                      ),
+                    ],
+                  );
                 },
               ),
             ),

@@ -1,4 +1,4 @@
-import 'package:faturas/payment_options/model/payment_model.dart';
+import 'package:faturas/payment_options/model/payment_option.dart';
 import 'package:faturas/payment_options/view_model/payment_options.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
