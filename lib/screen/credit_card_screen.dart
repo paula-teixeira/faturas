@@ -65,127 +65,132 @@ class _CreditCardWidgetState extends State<CreditCardWidget> {
       ),
       body: Padding(
         padding: EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            Text(
-              'Número do cartão',
-              style: formLabelTextStyle,
-            ),
-            TextFormField(
-              controller: _numberController,
-              maxLength: 16,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-              ),
-              keyboardType: TextInputType.number,
-              validator: _notEmpty,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              'Nome do titular do cartão',
-              style: formLabelTextStyle,
-            ),
-            TextFormField(
-              controller: _nameController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-              ),
-              validator: _notEmpty,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Column(
               children: [
-                Column(
+                Text(
+                  'Número do cartão',
+                  style: formLabelTextStyle,
+                ),
+                TextFormField(
+                  controller: _numberController,
+                  maxLength: 16,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                  keyboardType: TextInputType.number,
+                  validator: _notEmpty,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Nome do titular do cartão',
+                  style: formLabelTextStyle,
+                ),
+                TextFormField(
+                  controller: _nameController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                  validator: _notEmpty,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Row(
                   children: [
-                    Text(
-                      'Validade',
-                      style: formLabelTextStyle,
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      child: TextFormField(
-                        controller: _expirationController,
-                        maxLength: 4,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
+                    Column(
+                      children: [
+                        Text(
+                          'Validade',
+                          style: formLabelTextStyle,
                         ),
-                        keyboardType: TextInputType.number,
-                        validator: _notEmpty,
-                      ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          child: TextFormField(
+                            controller: _expirationController,
+                            maxLength: 4,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                            ),
+                            keyboardType: TextInputType.number,
+                            validator: _notEmpty,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Spacer(),
+                    Column(
+                      children: [
+                        Text(
+                          'CVV',
+                          style: formLabelTextStyle,
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          child: TextFormField(
+                            controller: _cvvController,
+                            maxLength: 3,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                            ),
+                            keyboardType: TextInputType.number,
+                            validator: _notEmpty,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-                Spacer(),
-                Column(
-                  children: [
-                    Text(
-                      'CVV',
-                      style: formLabelTextStyle,
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      'Essa transação é 100% segura e com certificados '
+                      'de segurança que garantem a integridade dos seus dados.',
+                      style: descriptionTextStyle,
                     ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.4,
-                      child: TextFormField(
-                        controller: _cvvController,
-                        maxLength: 3,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                        ),
-                        keyboardType: TextInputType.number,
-                        validator: _notEmpty,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Row(
+                    children: [
+                      OutlinedButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: Text('Voltar'),
                       ),
-                    ),
-                  ],
+                      Spacer(),
+                      Text('2 de 3'),
+                      Spacer(),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            creditCardViewModel.creditCard = CreditCard(
+                                _numberController.text,
+                                _nameController.text,
+                                _expirationController.text,
+                                _cvvController.text);
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ConfirmationScreen(),
+                              ),
+                            );
+                          }
+                        },
+                        child: Text('Continuar'),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Text(
-                  'Essa transação é 100% segura e com certificados '
-                  'de segurança que garantem a integridade dos seus dados.',
-                  style: descriptionTextStyle,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Row(
-                children: [
-                  OutlinedButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: Text('Voltar'),
-                  ),
-                  Spacer(),
-                  Text('2 de 3'),
-                  Spacer(),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        creditCardViewModel.creditCard = CreditCard(
-                            _numberController.text,
-                            _nameController.text,
-                            _expirationController.text,
-                            _cvvController.text);
-
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ConfirmationScreen(),
-                          ),
-                        );
-                      }
-                    },
-                    child: Text('Continuar'),
-                  ),
-                ],
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

@@ -39,7 +39,7 @@ showProcessingDialog(BuildContext context, String cvv) {
       ],
     ),
     content: Text(
-        'Estanis confirmando a transação com seu banco e isso pode levar alguns segundos.'),
+        'Estamos confirmando a transação com seu banco e isso pode levar alguns segundos.'),
   );
 
   AlertDialog okDialog = AlertDialog(
@@ -62,7 +62,7 @@ showProcessingDialog(BuildContext context, String cvv) {
           future: processPayment(cvv),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              if (snapshot.data == 'OK') {
+              if (snapshot.data == 'ok') {
                 return okDialog;
               } else {
                 return errorDialog;

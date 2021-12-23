@@ -88,7 +88,7 @@ class HomeScreen extends StatelessWidget {
                   onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (builder) => PaymentOptionsWidget(),
+                      builder: (context) => PaymentOptionsScreen(),
                     ),
                   ),
                   child: Text('Pagar com cartão de crédito'),
