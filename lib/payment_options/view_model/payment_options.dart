@@ -1,6 +1,5 @@
-import 'package:faturas/payment_options/model/payment_option.dart';
-import 'package:faturas/payment_options/model/payment_options_model.dart';
-import 'package:flutter/material.dart';
+import 'package:faturas/payment_options/model/payment_option/payment_option.dart';
+import 'package:faturas/payment_options/model/payment_option/payment_options_model.dart';
 
 class PaymentOptionsViewModel {
   final PaymentOptionsModel _paymentOptionsModel;

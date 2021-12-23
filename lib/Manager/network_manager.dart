@@ -1,7 +1,5 @@
 import 'dart:convert';
-
-import 'package:faturas/payment_options/model/payment_option.dart';
-import 'package:flutter/material.dart';
+import 'package:faturas/payment_options/model/payment_option/payment_option.dart';
 import 'package:http/http.dart' as http;
 
 class NetworkManager {
@@ -14,7 +12,6 @@ class NetworkManager {
     if (response.statusCode == 200) {
       final decodedJson = jsonDecode(response.body)['options']['installments'];
       final paymentData = decodedJson.map<PaymentOption>((json) => PaymentOption.fromJson(json)).toList();
-      debugPrint(paymentData.toString());
 
       return paymentData;
     } else {

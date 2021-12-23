@@ -1,6 +1,8 @@
-import 'package:faturas/payment_options/model/payment_option.dart';
+import 'package:faturas/payment_options/model/payment_option/payment_option.dart';
+import 'package:faturas/payment_options/model/payment_option/payment_options_model.dart';
 import 'package:faturas/payment_options/view/payment_options_tile.dart';
 import 'package:faturas/payment_options/view_model/payment_options.dart';
+import 'package:faturas/screen/credit_card_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +10,21 @@ import 'package:provider/provider.dart';
 NumberFormat formatter = NumberFormat.simpleCurrency();
 
 class PaymentOptionsScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ProxyProvider<PaymentOptionsModel, PaymentOptionsViewModel>(
+      create: (context) => PaymentOptionsViewModel(
+          paymentOptionsModel: context.read<PaymentOptionsModel>()),
+      update: (context, paymentOptionsModel, notifier) =>
+          PaymentOptionsViewModel(
+            paymentOptionsModel: paymentOptionsModel,
+          ),
+      child: PaymentOptionsWidget(),
+    );
+  }
+}
+
+class PaymentOptionsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final paymentOptions = context
@@ -122,7 +139,14 @@ class PaymentOptionsScreen extends StatelessWidget {
                   Text('1 de 3'),
                   Spacer(),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CreditCardWidget(),
+                        ),
+                      );
+                    },
                     child: Text('Continuar'),
                   ),
                 ],

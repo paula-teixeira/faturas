@@ -10,7 +10,17 @@ final subtitleTextStyle = TextStyle(
   color: Colors.grey[900],
 );
 
+final descriptionTextStyle = TextStyle(
+  fontSize: 16,
+  color: Colors.grey,
+);
+
 final alertTextStyle = TextStyle(
   fontSize: 16,
   color: Colors.red,
+);
+
+final formLabelTextStyle = TextStyle(
+  fontSize: 16,
+  fontWeight: FontWeight.bold,
 );

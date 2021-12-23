@@ -84,10 +84,11 @@ class HomeScreen extends StatelessWidget {
                   style: subtitleTextStyle,
                 ),
                 OutlinedButton(
+                  key: Key('Payment Button'),
                   onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (builder) => PaymentOptionsScreen(),
+                      builder: (builder) => PaymentOptionsWidget(),
                     ),
                   ),
                   child: Text('Pagar com cartão de crédito'),

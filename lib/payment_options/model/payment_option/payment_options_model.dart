@@ -1,7 +1,7 @@
 import 'package:faturas/Manager/network_manager.dart';
-import 'package:faturas/payment_options/model/payment_option.dart';
+import 'package:faturas/payment_options/model/payment_option/payment_option.dart';
 import 'package:flutter/cupertino.dart';
-import '../../main.dart';
+import '../../../main.dart';
 
 // List<PaymentOption> defaultPaymentOptions = [
 //   PaymentOption(1, 3180, 3180),
